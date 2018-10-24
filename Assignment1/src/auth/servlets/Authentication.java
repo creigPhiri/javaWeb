@@ -59,11 +59,24 @@ public class Authentication extends HttpServlet {
 		//method handles the request from the login page
 		//parameter: request object
 		//return :
-		public String loginRoute(HttpServletRequest request) {
-			return "sent from login page";
-		}
-
-		public String registrationRoute(HttpServletRequest request) {
-			return "sent from registration page";
-		}
+			public String loginRoute(HttpServletRequest request) {
+				return "sent from login page";
+			}
+			
+		
+		//method handles requests from the registration page
+		// params: request object
+		//return:
+			public String registrationRoute(HttpServletRequest request) {
+				String password = request.getParameter("pw");
+				String pwConfirm =request.getParameter("pwConfirm");
+				String val ="";
+				if(password.equals(pwConfirm)) {
+					val+= "<h1 style='color:green'>Passwords match</h1>";
+				}
+				else {
+					val +="<h1 style='color:red'>Passwords do not match..!!!</h1>";
+				}
+				return val+= "\nsent from registration page";
+			}
 }
