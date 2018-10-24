@@ -3,11 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <title>LoginPage</title>
+<style>
+	div .row {
+		width:50%;
+		float:left;
+	}
+	
+	div .row input {
+		display: block;
+		align :right;
+		padding:2%;
+		margin-bottom:2%;
+	}
+	.btn {
+		padding:10px;
+	}
+</style>
 </head>
 <body>
-	<form method="post" action="Authentication">
-		<input type="hidden" name="authType" value="loginPage"/>
-		<input type="submit"/>
-	</form>
+	<div>
+		<div class="row">
+			<h3>image area</h3>
+		</div>
+		<div class="row">
+			<form method="post" action="Authentication">
+				<input type="hidden" name="authType" value="login"/>
+				    <input type="email" name="email" placeholder="email address"/>
+				  <input type="password" name="pw" placeholder="password"/>				
+				<input type="submit"/ class="btn">
+				
+			</form>
+		</div>
+	</div>
 </body>
 </html>

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Authentication")
 public class Authentication extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public PrintWriter pw ;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,15 +37,33 @@ public class Authentication extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//handles the routing for the pages
+		
 		response.setContentType("text/html");
-		PrintWriter pw = response.getWriter();
-		if(request.getParameter("authType").contains("login")) {
-			pw.println("this was requested by login page");
-		}else if(request.getParameter("authType").contains("registration")) {
-			pw.println("this was requested by the registration page");
-			}
+		pw = response.getWriter();
+		String authType = request.getParameter("authType");
+		
+			if(request.getParameter("authType").contains("login"))
+			  {
+				pw.println(loginRoute(request));
+			  }
+				else if(request.getParameter("authType").contains("registration")) 
+				{
+					pw.println(registrationRoute(request));
+				}
 	
-//		response.sendRedirect(request.getContextPath()+"/Dashboard.html");
 	}
+	
+	//Routes------------------------------------------------------
+	
+		//method handles the request from the login page
+		//parameter: request object
+		//return :
+		public String loginRoute(HttpServletRequest request) {
+			return "sent from login page";
+		}
 
+		public String registrationRoute(HttpServletRequest request) {
+			return "sent from registration page";
+		}
 }
