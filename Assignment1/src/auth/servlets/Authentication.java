@@ -43,11 +43,11 @@ public class Authentication extends HttpServlet {
 		pw = response.getWriter();
 		String authType = request.getParameter("authType");
 		
-			if(request.getParameter("authType").contains("login"))
+			if(authType.equals("login"))
 			  {
 				pw.println(loginRoute(request));
 			  }
-				else if(request.getParameter("authType").contains("registration")) 
+				else if(authType.equals("registration")) 
 				{
 					pw.println(registrationRoute(request));
 				}
@@ -72,7 +72,7 @@ public class Authentication extends HttpServlet {
 				String pwConfirm =request.getParameter("pwConfirm");
 				String val ="";
 				if(password.equals(pwConfirm)) {
-					val+= "<h1 style='color:green'>Passwords match</h1>";
+					val+= "<h1 style='color:green'>Passwords match</h1>";  //used for testing purposes simple check for password verification
 				}
 				else {
 					val +="<h1 style='color:red'>Passwords do not match..!!!</h1>";
