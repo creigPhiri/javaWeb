@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Authentication
@@ -60,6 +61,13 @@ public class Authentication extends HttpServlet {
 		//parameter: request object
 		//return :
 			public String loginRoute(HttpServletRequest request) {
+				//validate data
+				
+				//create session
+				HttpSession session =request.getSession();
+				
+				//set session
+				session.setAttribute("username", "Malinga");
 				return "sent from login page";
 			}
 			
