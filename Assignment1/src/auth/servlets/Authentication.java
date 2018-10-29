@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,36 +12,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utilities.classes.*;
 
 import com.mysql.jdbc.Connection;
 
-/**
- * Servlet implementation class Authentication
- */
+
 @WebServlet("/Authentication")
 public class Authentication extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public PrintWriter pw ;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+  
     public Authentication() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//handles the routing for the pages
 		
@@ -52,11 +43,11 @@ public class Authentication extends HttpServlet {
 		
 			if(authType.equals("login"))
 			  {
-				pw.println(loginRoute(request));
+				loginRoute(request, response);
 			  }
 				else if(authType.equals("registration")) 
 				{
-					pw.println(registrationRoute(request));
+					registrationRoute(request, response);
 				}
 	
 	}
@@ -90,36 +81,78 @@ public class Authentication extends HttpServlet {
 		//method handles the request from the login page
 		//parameter: request object
 		//return :
-			public String loginRoute(HttpServletRequest request) {
+			public void loginRoute(HttpServletRequest request, HttpServletResponse response) {
 				//validate data
 				try {
 					Connection con =connectDataBase();
+					PreparedStatement ps = con.prepareStatement("select email,passwords from users_table where email=? and passwords=?");
+					ps.setString(1, request.getParameter("email"));
+					ps.setString(2, request.getParameter("pw"));
+					
+					ResultSet rs = ps.executeQuery();
+					System.out.println(rs.toString());
+					
+					if (rs.next()) {
+						//create session
+						HttpSession session =request.getSession();
+						
+						//set session
+						session.setAttribute("username", "Malinga");
+						
+						response.sendRedirect(request.getContextPath()+"/Dashboard.jsp");
+						return;
+					}
+					else {
+						response.sendRedirect(request.getContextPath()+"/");
+					}
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
+					
 				}
-				//create session
-				HttpSession session =request.getSession();
-				
-				//set session
-				session.setAttribute("username", "Malinga");
-				return "sent from login page";
+
 			}
 			
 		
 		//method handles requests from the registration page
 		// params: request object
 		//return:
-			public String registrationRoute(HttpServletRequest request) {
-				String password = request.getParameter("pw");
-				String pwConfirm =request.getParameter("pwConfirm");
-				String val ="";
-				if(password.equals(pwConfirm)) {
-					val+= "<h1 style='color:green'>Passwords match</h1>";  //used for testing purposes simple check for password verification
+			public void registrationRoute(HttpServletRequest request, HttpServletResponse response) {
+			Person person = new Person();
+			person.firstname =request.getParameter("fname");
+			person.lastname =request.getParameter("lname");
+			person.email =request.getParameter("email");
+			person.password =request.getParameter("pw");
+				
+				if(helperFunctions.passwordValidation(person.password,request.getParameter("pwConfirm")) ) {
+					if(person.firstname == null || person.lastname == null) {
+						
+						try {
+							Connection con = connectDataBase();
+							PreparedStatement ps = con.prepareStatement("insert in users_table (firstname, lastname,email,passwords,role) values(firstname=?, lastname=?,email=?, passwords =? ,role = ?");
+							ps.setString(1, person.firstname);
+							ps.setString(2, person.lastname);
+							ps.setString(3, person.email);
+							ps.setString(4, person.password);
+							ps.setString(5, person.role);
+							ResultSet rs = ps.executeQuery();
+							System.out.println("record inserted");
+							
+						}catch(Exception e) {
+							e.printStackTrace();
+						}
+					}
 				}
 				else {
-					val +="<h1 style='color:red'>Passwords do not match..!!!</h1>";
+					try {
+						response.sendRedirect(request.getContextPath()+"/registration.html");
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+					
 				}
-				return val+= "\nsent from registration page";
+
 			}
 }
