@@ -25,14 +25,14 @@
 <body>
 	<div>
 		<div class="row">
-			<h3>image area</h3>
+			<h3><img src="images/welcome.jpeg"/></h3>
 		</div>
 		<div class="row">
 			<form method="post" action="Authentication">
 			   <input type="hidden" name="authType" value="login"/>
 				  <input type="email" name="email" placeholder="email address"/>
 				    <input type="password" name="pw" placeholder="password"/>
-				    <input type="checkbox" name="recapture"/><label for="recapture">I am a human</label>
+				    <input type="checkbox" required name="recapture"/><label for="recapture">I am a human</label>
 				     <br/>
 			     	<button type="submit" class="btn" href="/Authentication">Login</button>
 			     <button name="register" ><a href="/Assignment1_Servlets/registration.html" class="btn">Register</a></button>
