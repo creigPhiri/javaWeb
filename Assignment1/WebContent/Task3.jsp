@@ -18,10 +18,17 @@ ul {
 </head>
 <body>
 	<ul>
-<li><a href="/Assignment1_Servlet/Dashboard.jsp">Dashboard/a></li>
-	<li><a href="/Assignment1_Servlet/Task2.jsp">Task 2</a></li>
-	<li><a href="/Assignment1_Servlet/Task3.jsp">Task 3</a></li>
-	<li><a href="/Assignment1_Servlet/Task4.jsp">Task 4</a></li>
+	<li><a href="/Assignment1_Servlets/Dashboard.jsp">Dashboard</a></li>
+	<li><a href="/Assignment1_Servlets/Task2.jsp">Task 2</a></li>
+	<li><a href="/Assignment1_Servlets/Task3.jsp">Task 3</a></li>
+	<li><a href="/Assignment1_Servlets/Task4.jsp">Task 4</a></li>
+	<li><a href="#">Logout</a></li>
+	
 	</ul>
+	
+	<div>
+		<img src="images/underconstruction.png" width=100%>
+	</div>
+	
 </body>
 </html>

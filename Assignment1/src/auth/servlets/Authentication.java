@@ -97,7 +97,7 @@ public class Authentication extends HttpServlet {
 						HttpSession session =request.getSession();
 						
 						//set session
-						session.setAttribute("username", "Malinga");
+						session.setAttribute("username", request.getParameter("email"));
 						
 						response.sendRedirect(request.getContextPath()+"/Dashboard.jsp");
 						return;
